@@ -138,7 +138,7 @@ autocmd BufNewFile *.{c,cpp,h,hpp} call InsertCHeader()
 autocmd BufNewFile *.{py} call InsertPythonHeader()
 "autocmd BufNewFile *.{sh} call InsertBashHeader()
 
-autocmd Bufwritepre,filewritepre *.{c,cpp,h,hpp,py,sh} exe "1," . 13 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
+autocmd Bufwritepre,filewritepre *.{c,cpp,h,hpp,py} exe "1," . 13 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
 
 "headerfileguards
 function! s:insert_gates()
@@ -231,7 +231,7 @@ vnoremap <S-j> j
 vnoremap <S-h> h   
 
 " build
-" dear anyone who listens to my whining: this is fucking retarded
+" TODO dear anyone who listens to my whining: this is fucking retarded
 "nnoremap <c-F5> :vnew | !build.bat <CR>
 nnoremap <F5> :r!build<CR>
 nnoremap <F6> :vnew<CR>
