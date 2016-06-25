@@ -11,7 +11,7 @@ set tabstop=4
 set expandtab
 set shiftwidth=4
  
-"set indent shit
+"set indent
 set autoindent
 set smartindent
 set smarttab
@@ -31,7 +31,7 @@ set hidden
 set showmatch
 set mat=2
  
-"search shit
+"search 
 set hlsearch
 set incsearch
 set ignorecase
@@ -40,12 +40,12 @@ set smartcase
 "mouse
 set mouse=a
  
-"disable the ~ backup saving bullshit
+"disable the ~ backup 
 set nobackup
 set nowb
 set noswapfile
  
-"disable the windows GUI shit
+"disable the windows GUI 
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
@@ -161,7 +161,7 @@ autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 "vnoremap <Tab> > gv
 "vnoremap <S-Tab> < gv
  
-"font and colour shit
+"font and colour 
 highlight cursorline cterm=none
 "set guifont=Courier:h18:cDEFAULT
 set guifont=consolas=Consolas:h11:cDEFAULT
@@ -181,7 +181,7 @@ set clipboard=unnamed
 "set statusline=%F\ %y\ %l/%L\:%c\ %P
  
 
-"extra C++ shit
+"extra C++ keywords 
 syn keyword cppType local_persist internal_var internal_function global_var constant_var r32 r64 ubyte uint ulong i8 u8 i32 u32 i64 u64 i16 u16 b32
 "au BufNewFile,BufRead,BufEnter *.cpp,*.h set omnifunc=omni#cpp#complete#Main
 
@@ -241,10 +241,12 @@ vnoremap <S-j> j
 vnoremap <S-h> h   
 
 " build
-" TODO dear anyone who listens to my whining: this is fucking retarded
+" TODO make building better (under windows)
 "nnoremap <c-F5> :vnew | !build.bat <CR>
 nnoremap <F5> :r!build<CR>
 nnoremap <F6> :vnew<CR>
 "nnoremap <c-F5> :vnew | r !dir #<CR>
 "set makeprg = "build"
+
+" TODO do better python indenting
                 
