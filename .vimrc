@@ -2,7 +2,10 @@
 """settings
 
 set nocompatible
-"behave mswin
+
+if has("win32")
+    behave mswin
+endif
 
 set tabstop=4
 set expandtab
@@ -216,8 +219,15 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 
 "copy and paste from clipboard
-vnoremap <C-c> "*y
-nnoremap <C-p> "*p
+
+if has("win32")
+    vnoremap <C-c> "*y
+    nnoremap <C-p> "*p
+else
+    vnoremap <C-c> "+y
+    nnoremap <C-p> "+p
+endif
+
 
 "shift select
 nnoremap <S-l> vl   
