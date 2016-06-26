@@ -168,7 +168,7 @@ set guifont=consolas=Consolas:h11:cDEFAULT
 
 syntax enable
 set background=dark
-colorscheme	darkblue 
+colorscheme	desert 
 
 "fix ctrl-backspace
 inoremap <C-BS> <C-\><C-o>db
