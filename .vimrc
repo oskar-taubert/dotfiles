@@ -1,21 +1,70 @@
 
+
+" TODO vundle autocomplete etc.
 """settings
 
 set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+"status line
+Plugin 'bling/vim-airline'
+"Plugin 'bling/vim-airline-themes'
+"Plugin 'edsono/vim-matchit'
+"motions
+"Plugin 'justinmk/vim-sneak'
+"syntax highlighting
+"Plugin 'plasticboy/vim-markdown'
+"git integration
+Plugin 'tpope/vim-fugitive'
+"per buffer customized indentation
+Plugin 'tpope/vim-sleuth'
+"brackets and stuff
+Plugin 'tpope/vim-surround'
+"file switching
+Plugin 'vim-scripts/a.vim'
+
+"python things
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'nvie/vim-flake8'
+
+"Colorschemes
+Plugin 'tomasr/molokai'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'jnurmine/Zenburn'
+Plugin 'altercation/vim-colors-solarized'
+
+
+call vundle#end()
+filetype plugin indent on
 
 if has("win32")
     behave mswin
 endif
 
 set tabstop=4
+set softtabstop=4
 set expandtab
 set shiftwidth=4
+set textwidth=79
+set fileformat=unix
  
 "set indent
 set autoindent
 set smartindent
 set smarttab
 set cindent
+"code folding
+"set foldmethod 
+"set foldlevel = 99
  
 set number
 set cursorline
@@ -79,6 +128,10 @@ autocmd BufReadPost *
 "exit insert mode
 inoremap jk <esc>
 
+" TODO insert copyright notice into header
+" TODO insert some sort of project identifier into headerguards
+" TODO don't start header with '_', since this raises warning as reserved
+
 "fileheader
 function InsertCHeader()
 	"gives path relative to pwd
@@ -91,7 +144,6 @@ function InsertCHeader()
 	let createdate = strftime("%c")
 	let lastmod = ""
 
-    execute "normal! i//"
 	execute "normal! o/*************************************"
 	execute "normal! o*"
 	execute "normal! o* Filename : " . filename
@@ -146,9 +198,9 @@ autocmd Bufwritepre,filewritepre *.{c,cpp,h,hpp,py} exe "1," . 13 . "g/Last Modi
 "headerfileguards
 function! s:insert_gates()
   let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
-  execute "normal! i#ifndef _" . gatename . "_"
-  execute "normal! o#define _" . gatename . "_ "
-  execute "normal! Go#endif /* _" . gatename . "_ */"
+  execute "normal! Go#ifndef " . gatename
+  execute "normal! o#define " . gatename
+  execute "normal! Go#endif /* " . gatename . " */"
   normal! kk
 endfunction
 autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
@@ -156,6 +208,9 @@ autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 
 "reindent
 "autocmd BufWritePre *.{c,cpp,h,hpp} :normal gg=G
+"
+"flag whitespace
+"au BufRead,BufNewFile *.py,*pyw,*c,*h match BadWhitespace /\s\+$/
  
 "better intenting in visual mode
 "vnoremap <Tab> > gv
@@ -168,7 +223,8 @@ set guifont=consolas=Consolas:h11:cDEFAULT
 
 syntax enable
 set background=dark
-colorscheme	desert 
+colorscheme	matrix 
+set t_Co=256
 
 "fix ctrl-backspace
 inoremap <C-BS> <C-\><C-o>db
@@ -250,3 +306,16 @@ nnoremap <F6> :vnew<CR>
 
 " TODO do better python indenting
                 
+" Plugin settings
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" YCM
+let g:ycm_autoclose_preview_window_after_completion=1
