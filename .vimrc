@@ -129,11 +129,14 @@ autocmd BufReadPost *
 inoremap jk <esc>
 
 " TODO insert copyright notice into header
-" TODO insert some sort of project identifier into headerguards
-" TODO don't start header with '_', since this raises warning as reserved
+" TODO now it inserts an additional * -.- in the C header
+" TODO insert some sort of project identifier into headerguards??
 
 "fileheader
 function InsertCHeader()
+    "prevent the double comment thing from happening
+
+    filetype off
 	"gives path relative to pwd
 	"let filename = @%
 	"gives just the filename
@@ -144,20 +147,23 @@ function InsertCHeader()
 	let createdate = strftime("%c")
 	let lastmod = ""
 
+    "TODO fix this fucking thing, or make it properly
 	execute "normal! o/*************************************"
-	execute "normal! o*"
-	execute "normal! o* Filename : " . filename
-	execute "normal! o*"
-	execute "normal! o* Projectname : " . projectname
-	execute "normal! o*"
-	execute "normal! o* Author : " . author
-	execute "normal! o*"
-	execute "normal! o* Creation Date : " . createdate
-	execute "normal! o*"
-	execute "normal! o* Last Modified : " . lastmod
-	execute "normal! o*"
+	execute "normal! o"
+	execute "normal! o Filename : " . filename
+	execute "normal! o"
+	execute "normal! o Projectname : " . projectname
+	execute "normal! o"
+	execute "normal! o Author : " . author
+	execute "normal! o"
+	execute "normal! o Creation Date : " . createdate
+	execute "normal! o"
+	execute "normal! o Last Modified : " . lastmod
+	execute "normal! o"
 	execute "normal! o*************************************/"
 	execute "normal! o"
+    filetype plugin indent on
+
 endfunction
 
 function InsertPythonHeader()
@@ -193,7 +199,32 @@ autocmd BufNewFile *.{c,cpp,h,hpp} call InsertCHeader()
 autocmd BufNewFile *.{py} call InsertPythonHeader()
 "autocmd BufNewFile *.{sh} call InsertBashHeader()
 
-autocmd Bufwritepre,filewritepre *.{c,cpp,h,hpp,py} exe "1," . 13 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
+autocmd Bufwritepre,filewritepre *.{c,cpp,h,hpp,py} call UpdateLMD()
+
+"update last modified date
+function! UpdateLMD()
+    call SaveWinView()
+    exe "1," . 13 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
+    call RestWinView()
+endfunction
+
+"save current view settings perwindow perbuffer
+function! SaveWinView()
+    if !exists("w:SavedBufView")
+        let w:SavedBufView = {}
+    endif
+    let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+"restore window
+function! RestWinView()
+    let buf = bufnr("%")
+    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+        call winrestview(w:SavedBufView[buf])
+        unlet w:SavedBufView[buf]
+    endif
+endfunction
+
 
 "headerfileguards
 function! s:insert_gates()
