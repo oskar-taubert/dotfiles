@@ -11,7 +11,7 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
@@ -25,16 +25,20 @@ Plugin 'bling/vim-airline'
 "Plugin 'plasticboy/vim-markdown'
 "git integration
 Plugin 'tpope/vim-fugitive'
-"per buffer customized indentation
-Plugin 'tpope/vim-sleuth'
+"per buffer customized indentation /// this is horrible fuckery
+"Plugin 'tpope/vim-sleuth'
 "brackets and stuff
 Plugin 'tpope/vim-surround'
 "file switching
 Plugin 'vim-scripts/a.vim'
 
 "python things
-Plugin 'vim-scripts/indentpython.vim'
+"this screws with the python fileheader.
+"Plugin 'vim-scripts/indentpython.vim'
 Plugin 'nvie/vim-flake8'
+
+"GDB plugin 
+Plugin 'vim-scripts/Conque-GDB'
 
 "Colorschemes
 Plugin 'tomasr/molokai'
@@ -56,16 +60,16 @@ set expandtab
 set shiftwidth=4
 set textwidth=79
 set fileformat=unix
- 
+
 "set indent
 set autoindent
 set smartindent
 set smarttab
 set cindent
 "code folding
-"set foldmethod 
+"set foldmethod
 "set foldlevel = 99
- 
+
 set number
 set cursorline
 set laststatus=2
@@ -74,13 +78,15 @@ set encoding=utf8
 set lazyredraw
 set magic
 set hidden
-"set autochdir
- 
+
+"set path for finding files 
+set path+=../../../include/,../include,./include,
+
 "bracket matching
 set showmatch
 set mat=2
- 
-"search 
+
+"search
 set hlsearch
 set incsearch
 set ignorecase
@@ -88,18 +94,18 @@ set smartcase
 
 "mouse
 set mouse=a
- 
-"disable the ~ backup 
+
+"disable the ~ backup
 set nobackup
 set nowb
 set noswapfile
- 
-"disable the windows GUI 
+
+"disable the windows GUI
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
 set guioptions-=L
- 
+
 "turn off sounds
 set noerrorbells
 set novisualbell
@@ -118,7 +124,7 @@ augroup gui_enter
 	autocmd!
 	au GUIEnter * set vb t_vb=
 augroup END
- 
+
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -177,12 +183,13 @@ function InsertPythonHeader()
 	let createdate = strftime("%c")
 	let lastmod = ""
 
+    filetype off
     execute "normal! i#!/usr/bin/env python"
 	execute "normal! o#####################################"
 	execute "normal! o#"
 	execute "normal! o# Filename : " . filename
 	execute "normal! o#"
-	execute "normal! o# Projectname : " . projectname
+	execute "normal! o# Projectname :" . projectname
 	execute "normal! o#"
 	execute "normal! o# Author : " . author
 	execute "normal! o#"
@@ -192,6 +199,7 @@ function InsertPythonHeader()
 	execute "normal! o#"
 	execute "normal! o#####################################"
 	execute "normal! o"
+    filetype plugin indent on
 endfunction
 
 
@@ -242,33 +250,33 @@ autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 "
 "flag whitespace
 "au BufRead,BufNewFile *.py,*pyw,*c,*h match BadWhitespace /\s\+$/
- 
+
 "better intenting in visual mode
 "vnoremap <Tab> > gv
 "vnoremap <S-Tab> < gv
- 
-"font and colour 
+
+"font and colour
 highlight cursorline cterm=none
 "set guifont=Courier:h18:cDEFAULT
 set guifont=consolas=Consolas:h11:cDEFAULT
 
 syntax enable
 set background=dark
-colorscheme	matrix 
+colorscheme	matrix
 set t_Co=256
 
 "fix ctrl-backspace
 inoremap <C-BS> <C-\><C-o>db
- 
+
 "setup status bar and wildmenu
 set wildmenu
 set wildmode=list:longest,full
 set wildignore=*.o,*.sb
 set clipboard=unnamed
 "set statusline=%F\ %y\ %l/%L\:%c\ %P
- 
 
-"extra C++ keywords 
+
+"extra C++ keywords
 syn keyword cppType local_persist internal_var internal_function global_var constant_var r32 r64 ubyte uint ulong i8 u8 i32 u32 i64 u64 i16 u16 b32
 "au BufNewFile,BufRead,BufEnter *.cpp,*.h set omnifunc=omni#cpp#complete#Main
 
@@ -317,15 +325,15 @@ endif
 
 
 "shift select
-nnoremap <S-l> vl   
-nnoremap <S-k> vk   
-nnoremap <S-j> vj   
-nnoremap <S-h> vh   
+nnoremap <S-l> vl
+nnoremap <S-k> vk
+nnoremap <S-j> vj
+nnoremap <S-h> vh
 
-vnoremap <S-l> l   
-vnoremap <S-k> k   
-vnoremap <S-j> j   
-vnoremap <S-h> h   
+vnoremap <S-l> l
+vnoremap <S-k> k
+vnoremap <S-j> j
+vnoremap <S-h> h
 
 " build
 " TODO make building better (under windows)
@@ -336,7 +344,7 @@ nnoremap <F6> :vnew<CR>
 "set makeprg = "build"
 
 " TODO do better python indenting
-                
+
 " Plugin settings
 " syntastic
 set statusline+=%#warningmsg#
@@ -347,6 +355,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = ' -std=c++11'
+let g:syntastic_cpp_include_dirs = ['../../include/', '../include', 'include']
 
 " YCM
-let g:ycm_autoclose_preview_window_after_completion=1
+"let g:ycm_autoclose_preview_window_after_completion=1
