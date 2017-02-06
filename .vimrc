@@ -302,6 +302,10 @@ inoremap ssz ß
 "autocmd FileType tex :iabbrev <buffer> Oe Ö
 "autocmd FileType tex :iabbrev <buffer> Ue Ü
 
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {<CR>}<Esc>O
+
 ""mappings
 
 "save with ctrl+s
