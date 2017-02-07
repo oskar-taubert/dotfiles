@@ -250,6 +250,24 @@ autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 "
 "flag whitespace
 "au BufRead,BufNewFile *.py,*pyw,*c,*h match BadWhitespace /\s\+$/
+"
+function ShowWS()
+   exe "normal mz"
+   %s/\s\+$//ge
+   exe "normal 'z"
+endfunction
+
+
+function DeleteTrailingWS()
+   exe "normal mz"
+   %s/\s\+$//ge
+   exe "normal 'z"
+endfunction
+
+autocmd BufWritePre *.py :call DeleteTrailingWS()
+
+
+
 
 "better intenting in visual mode
 "vnoremap <Tab> > gv
