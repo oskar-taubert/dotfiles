@@ -247,10 +247,8 @@ autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 
 "reindent
 "autocmd BufWritePre *.{c,cpp,h,hpp} :normal gg=G
-"
+
 "flag whitespace
-"au BufRead,BufNewFile *.py,*pyw,*c,*h match BadWhitespace /\s\+$/
-"
 function ShowWS()
    exe "normal mz"
    %s/\s\+$//ge
@@ -265,13 +263,6 @@ function DeleteTrailingWS()
 endfunction
 
 autocmd BufWritePre *.py :call DeleteTrailingWS()
-
-
-
-
-"better intenting in visual mode
-"vnoremap <Tab> > gv
-"vnoremap <S-Tab> < gv
 
 "font and colour
 highlight cursorline cterm=none
@@ -320,9 +311,14 @@ inoremap ssz ß
 "autocmd FileType tex :iabbrev <buffer> Oe Ö
 "autocmd FileType tex :iabbrev <buffer> Ue Ü
 
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {<CR>}<Esc>O
+"auto brackets
+autocmd FileType cpp inoremap { {<CR>}<Esc>O
+autocmd FileType cpp inoremap ( ()<Left>
+autocmd FileType cpp inoremap [ []<Left>
+
+autocmd FileType python inoremap { {}<Left>
+autocmd FileType python inoremap ( ()<Left>
+autocmd FileType python inoremap [ []<Left>
 
 ""mappings
 
