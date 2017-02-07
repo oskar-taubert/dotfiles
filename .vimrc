@@ -365,8 +365,6 @@ nnoremap <F6> :vnew<CR>
 "nnoremap <c-F5> :vnew | r !dir #<CR>
 "set makeprg = "build"
 
-" TODO do better python indenting
-
 " Plugin settings
 " syntastic
 set statusline+=%#warningmsg#
@@ -382,5 +380,6 @@ let g:syntastic_cpp_compiler_options = ' -std=c++11'
 let g:syntastic_cpp_include_dirs = ['../../include/', '../include', 'include']
 
 " YCM
-let g:ycm_autoclose_preview_window_after_completion=1
-
+let g:ycm_autoclose_preview_window_after_completion = 1
+" TODO there has to be a portable way like: /usr/bin/env python
+let g:ycm_server_python_interpreter = '/usr/bin/python2'
