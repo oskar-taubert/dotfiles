@@ -374,6 +374,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
 let g:syntastic_cpp_include_dirs = ['../../include/', '../include', 'include']
+let g:syntastic_python_flake8_args='--ignore=E501'
 
 " YCM
 let g:ycm_autoclose_preview_window_after_completion = 1
