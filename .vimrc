@@ -1,6 +1,3 @@
-
-
-" TODO vundle autocomplete etc.
 """settings
 
 set nocompatible
@@ -121,7 +118,7 @@ set completeopt=menu,menuone,longest,preview
 "should use augroups with autocmd! later, when resourcing the vimrc since au's are not named all the stuff will be doubled
 " only works for command line
 augroup gui_enter
-	autocmd!
+    autocmd!
 	au GUIEnter * set vb t_vb=
 augroup END
 
@@ -142,7 +139,6 @@ inoremap jk <esc>
 function InsertCHeader()
     "prevent the double comment thing from happening
 
-    filetype off
 	"gives path relative to pwd
 	"let filename = @%
 	"gives just the filename
