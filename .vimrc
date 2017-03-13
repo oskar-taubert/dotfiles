@@ -70,6 +70,13 @@ set cindent
 "set foldmethod
 "set foldlevel = 99
 
+"line wrapping
+set wrap
+set linebreak
+set nolist
+set textwidth=0
+set wrapmargin=0
+
 set number
 set cursorline
 set laststatus=2
@@ -116,6 +123,9 @@ set vb t_vb=
 set completeopt=menu,menuone,longest,preview
 :inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 :inoremap <C-tab> <C-n>
+
+"set time locale for strftime() to english to avoid umlauts in dates
+language time en_GB.utf8
 
 ""autocommands
 "should use augroups with autocmd! later, when resourcing the vimrc since au's are not named all the stuff will be doubled
@@ -212,6 +222,7 @@ autocmd Bufwritepre,filewritepre *.{c,cpp,h,hpp,py} call UpdateLMD()
 "update last modified date
 function! UpdateLMD()
     call SaveWinView()
+    " TODO ensure english language months to prevent umlauts -_-
     exe "1," . 13 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
     call RestWinView()
 endfunction
