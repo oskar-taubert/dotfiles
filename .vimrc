@@ -37,6 +37,9 @@ Plugin 'nvie/vim-flake8'
 "GDB plugin 
 Plugin 'vim-scripts/Conque-GDB'
 
+"fugitive
+Plugin 'tpope/vim-fugitigve'
+
 "Colorschemes
 Plugin 'tomasr/molokai'
 Plugin 'flazz/vim-colorschemes'
