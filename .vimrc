@@ -385,6 +385,8 @@ let g:syntastic_cpp_compiler_options = ' -std=c++11'
 let g:syntastic_cpp_include_dirs = ['../../include/', '../include', 'include']
 " TODO remove these again and add proper python indent
 let g:syntastic_python_flake8_args='--ignore=E501,E126'
+" disable lacheck
+let g:syntastic_tex_checkers=['']
 
 " YCM
 let g:ycm_autoclose_preview_window_after_completion = 1
