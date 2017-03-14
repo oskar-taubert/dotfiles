@@ -218,7 +218,6 @@ autocmd Bufwritepre,filewritepre *.{c,cpp,h,hpp,py} call UpdateLMD()
 "update last modified date
 function! UpdateLMD()
     call SaveWinView()
-    " TODO ensure english language months to prevent umlauts -_-
     exe "1," . 13 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
     call RestWinView()
 endfunction
@@ -349,16 +348,16 @@ else
 endif
 
 
-"shift select
-nnoremap <S-l> vl
-nnoremap <S-k> vk
-nnoremap <S-j> vj
-nnoremap <S-h> vh
-
-vnoremap <S-l> l
-vnoremap <S-k> k
-vnoremap <S-j> j
-vnoremap <S-h> h
+""shift select
+"nnoremap <S-l> vl
+"nnoremap <S-k> vk
+"nnoremap <S-j> vj
+"nnoremap <S-h> vh
+"
+"vnoremap <S-l> l
+"vnoremap <S-k> k
+"vnoremap <S-j> j
+"vnoremap <S-h> h
 
 " build
 " TODO make building better (under windows)
