@@ -1,5 +1,7 @@
 """settings
 
+"TODO add license to each source file
+
 set nocompatible
 filetype off
 
@@ -391,3 +393,6 @@ let g:syntastic_tex_checkers=['']
 let g:ycm_autoclose_preview_window_after_completion = 1
 " TODO there has to be a portable way like: /usr/bin/env python
 let g:ycm_server_python_interpreter = '/usr/bin/python2'
+
+let g:indentLine_conceallevel = 2
+let g:indentLine_concealcursor = ''
