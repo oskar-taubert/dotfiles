@@ -37,8 +37,8 @@ Plugin 'nvie/vim-flake8'
 "GDB plugin 
 Plugin 'vim-scripts/Conque-GDB'
 
-"fugitive
-Plugin 'tpope/vim-fugitigve'
+"indent guides for space indentation
+Plugin 'Yggdroot/indentLine'
 
 "Colorschemes
 Plugin 'tomasr/molokai'
@@ -58,7 +58,6 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 set shiftwidth=4
-set textwidth=79
 set fileformat=unix
 
 "set indent
@@ -66,6 +65,10 @@ set autoindent
 set smartindent
 set smarttab
 set cindent
+" TODO put in retab/reindent on read for some filetypes
+" set list listchars=eol:$,trail:.,precedes:.,extends:>,tab:| 
+set list listchars=tab:\|\ ,precedes:<,extends:>,eol:$
+
 "code folding
 "set foldmethod
 "set foldlevel = 99
@@ -135,7 +138,7 @@ augroup gui_enter
 	au GUIEnter * set vb t_vb=
 augroup END
 
-" Return to last edit position when opening files (You want this!)
+" Return to last edit position when opening files
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
@@ -143,10 +146,6 @@ autocmd BufReadPost *
 
 "exit insert mode
 inoremap jk <esc>
-
-" TODO insert copyright notice into header
-" TODO now it inserts an additional * -.- in the C header
-" TODO insert some sort of project identifier into headerguards??
 
 "fileheader
 function InsertCHeader()
@@ -273,7 +272,7 @@ endfunction
 
 autocmd BufWritePre *.py :call DeleteTrailingWS()
 
-"font and colour
+"font and color
 highlight cursorline cterm=none
 "set guifont=Courier:h18:cDEFAULT
 set guifont=consolas=Consolas:h11:cDEFAULT
