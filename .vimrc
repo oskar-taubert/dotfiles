@@ -281,7 +281,8 @@ set guifont=consolas=Consolas:h11:cDEFAULT
 
 syntax enable
 set background=dark
-colorscheme	matrix
+" colorscheme	matrix
+colorscheme tetragrammaton
 set t_Co=256
 
 "fix ctrl-backspace
