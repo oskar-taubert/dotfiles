@@ -54,6 +54,9 @@ filetype plugin indent on
 
 if has("win32")
     behave mswin
+else
+    "set time locale for strftime() to english to avoid umlauts in dates
+    language time en_GB.utf8
 endif
 
 set tabstop=4
@@ -128,9 +131,6 @@ set vb t_vb=
 set completeopt=menu,menuone,longest,preview
 :inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 :inoremap <C-tab> <C-n>
-
-"set time locale for strftime() to english to avoid umlauts in dates
-language time en_GB.utf8
 
 ""autocommands
 "should use augroups with autocmd! later, when resourcing the vimrc since au's are not named all the stuff will be doubled
