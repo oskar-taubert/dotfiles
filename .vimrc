@@ -194,7 +194,7 @@ function InsertPythonHeader()
 	let lastmod = ""
 
     filetype off
-    execute "normal! i#!/usr/bin/env python"
+    execute "normal! i#!/usr/bin/env python3"
 	execute "normal! o#####################################"
 	execute "normal! o#"
 	execute "normal! o# Filename : " . filename
