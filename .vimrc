@@ -56,7 +56,7 @@ if has("win32")
     behave mswin
 else
     "set time locale for strftime() to english to avoid umlauts in dates
-    language time en_GB.utf8
+    language time en_US.utf8
 endif
 
 set tabstop=4
