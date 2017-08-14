@@ -72,7 +72,7 @@ set smarttab
 set cindent
 " TODO put in retab/reindent on read for some filetypes
 " set list listchars=eol:$,trail:.,precedes:.,extends:>,tab:| 
-set list listchars=tab:\|\ ,precedes:<,extends:>,eol:$
+set list listchars=tab:>-,precedes:<,extends:>,eol:$
 
 "code folding
 "set foldmethod
@@ -387,6 +387,7 @@ let g:syntastic_cpp_compiler_options = ' -std=c++11'
 let g:syntastic_cpp_include_dirs = ['../../include/', '../include', 'include']
 " TODO remove these again and add proper python indent
 let g:syntastic_python_flake8_args='--ignore=E501,E126'
+let g:syntastic_python_python_exec='/usr/bin/python3'
 " disable lacheck
 let g:syntastic_tex_checkers=['']
 
