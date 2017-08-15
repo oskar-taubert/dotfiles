@@ -323,7 +323,7 @@ inoremap ssz ß
 "autocmd FileType tex :iabbrev <buffer> Ue Ü
 
 "auto brackets
-autocmd FileType cpp inoremap { {<CR>}<Esc>O
+autocmd FileType cpp inoremap { {}<Left>
 autocmd FileType cpp inoremap ( ()<Left>
 autocmd FileType cpp inoremap [ []<Left>
 
