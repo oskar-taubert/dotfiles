@@ -396,6 +396,7 @@ let g:syntastic_tex_checkers=['']
 let g:ycm_autoclose_preview_window_after_insertion = 1
 " TODO there has to be a portable way like: /usr/bin/env python
 "let g:ycm_server_python_interpreter = '/usr/bin/python2'
+let g:ycm_python_binary_path = 'python3'
 
 let g:indentLine_conceallevel = 2
 let g:indentLine_concealcursor = ''
