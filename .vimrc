@@ -24,6 +24,7 @@ Plugin 'bling/vim-airline'
 "Plugin 'plasticboy/vim-markdown'
 "git integration
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-unimpaired'
 "per buffer customized indentation /// this is horrible fuckery
 "Plugin 'tpope/vim-sleuth'
 "brackets and stuff
