@@ -43,6 +43,9 @@ Plugin 'vim-scripts/Conque-GDB'
 "indent guides for space indentation
 Plugin 'Yggdroot/indentLine'
 
+" go things
+Plugin 'fatih/vim-go'
+
 "Colorschemes
 Plugin 'tomasr/molokai'
 Plugin 'flazz/vim-colorschemes'
@@ -400,3 +403,7 @@ let g:ycm_python_binary_path = 'python3'
 
 let g:indentLine_conceallevel = 2
 let g:indentLine_concealcursor = ''
+
+" TODO properly configure the go stuff
+" go imports settings
+" set gofmt_command = goimports
