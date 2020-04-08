@@ -1,7 +1,3 @@
-"""settings
-
-"TODO add license to each source file
-
 set nocompatible
 filetype off
 
@@ -10,58 +6,55 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
+"c/c++ code completion
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
-"status line
-Plugin 'bling/vim-airline'
-"Plugin 'bling/vim-airline-themes'
-"Plugin 'edsono/vim-matchit'
-"motions
-"Plugin 'justinmk/vim-sneak'
 "syntax highlighting
-"Plugin 'plasticboy/vim-markdown'
+Plugin 'scrooloose/syntastic'
+"file explorer
+Plugin 'scrooloose/nerdtree'
+
+"linter
+Plugin 'w0rp/ale'
+
+"multiple cursors
+Plugin 'terryma/vim-multiple-cursors'
+
+"Unix file operations
+"Plugin 'tpope/vim-eunuch'
+
+"status line
+"Plugin 'bling/vim-airline'
+"Plugin 'bling/vim-airline-themes'
+Plugin 'itchyny/lightline.vim'
+
 "git integration
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-unimpaired'
+Plugin 'airblade/vim-gitgutter'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-unimpaired'
+
 "per buffer customized indentation /// this is horrible fuckery
 "Plugin 'tpope/vim-sleuth'
+
 "brackets and stuff
 Plugin 'tpope/vim-surround'
-"file switching
-Plugin 'vim-scripts/a.vim'
-
-"python things
-"this screws with the python fileheader.
-"Plugin 'vim-scripts/indentpython.vim'
-Plugin 'nvie/vim-flake8'
 
 "GDB plugin 
-Plugin 'vim-scripts/Conque-GDB'
+"Plugin 'vim-scripts/Conque-GDB'
 
 "indent guides for space indentation
 Plugin 'Yggdroot/indentLine'
 
+"python things
+Plugin 'nvie/vim-flake8'
+
 " go things
-Plugin 'fatih/vim-go'
-
-"Colorschemes
-Plugin 'tomasr/molokai'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
-
+"Plugin 'fatih/vim-go'
 
 call vundle#end()
 filetype plugin indent on
 
-if has("win32")
-    behave mswin
-else
-    "set time locale for strftime() to english to avoid umlauts in dates
-    language time en_US.utf8
-endif
+"set time locale for strftime() to english to avoid umlauts in dates
+language time en_US.utf8
 
 set tabstop=4
 set softtabstop=4
@@ -77,10 +70,6 @@ set cindent
 " TODO put in retab/reindent on read for some filetypes
 " set list listchars=eol:$,trail:.,precedes:.,extends:>,tab:| 
 set list listchars=tab:>-,precedes:<,extends:>,eol:$
-
-"code folding
-"set foldmethod
-"set foldlevel = 99
 
 "line wrapping
 set wrap
@@ -150,105 +139,7 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
-"exit insert mode
-inoremap jk <esc>
-
-"fileheader
-function InsertCHeader()
-    "prevent the double comment thing from happening
-
-	"gives path relative to pwd
-	"let filename = @%
-	"gives just the filename
-	let filename = expand('%:t')
-	let projectname = ""
-	let author = "Oskar Taubert"
-	"strftime is not portable!
-	let createdate = strftime("%c")
-	let lastmod = ""
-
-    "TODO fix this fucking thing, or make it properly
-	execute "normal! o/*************************************"
-	execute "normal! o"
-	execute "normal! o Filename : " . filename
-	execute "normal! o"
-	execute "normal! o Projectname : " . projectname
-	execute "normal! o"
-	execute "normal! o Author : " . author
-	execute "normal! o"
-	execute "normal! o Creation Date : " . createdate
-	execute "normal! o"
-	execute "normal! o Last Modified : " . lastmod
-	execute "normal! o"
-	execute "normal! o*************************************/"
-	execute "normal! o"
-    filetype plugin indent on
-
-endfunction
-
-function InsertPythonHeader()
-	"gives path relative to pwd
-	"let filename = @%
-	"gives just the filename
-	let filename = expand('%:t')
-	let projectname = ""
-	let author = "Oskar Taubert"
-	"strftime is not portable!
-	let createdate = strftime("%c")
-	let lastmod = ""
-
-    filetype off
-    execute "normal! i#!/usr/bin/env python3"
-	execute "normal! o#####################################"
-	execute "normal! o#"
-	execute "normal! o# Filename : " . filename
-	execute "normal! o#"
-	execute "normal! o# Projectname :" . projectname
-	execute "normal! o#"
-	execute "normal! o# Author : " . author
-	execute "normal! o#"
-	execute "normal! o# Creation Date : " . createdate
-	execute "normal! o#"
-	execute "normal! o# Last Modified : " . lastmod
-	execute "normal! o#"
-	execute "normal! o#####################################"
-	execute "normal! o"
-    filetype plugin indent on
-endfunction
-
-
-autocmd BufNewFile *.{c,cpp,h,hpp} call InsertCHeader()
-autocmd BufNewFile *.{py} call InsertPythonHeader()
-"autocmd BufNewFile *.{sh} call InsertBashHeader()
-
-autocmd Bufwritepre,filewritepre *.{c,cpp,h,hpp,py} call UpdateLMD()
-
-"update last modified date
-function! UpdateLMD()
-    call SaveWinView()
-    exe "1," . 13 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
-    call RestWinView()
-endfunction
-
-"save current view settings perwindow perbuffer
-function! SaveWinView()
-    if !exists("w:SavedBufView")
-        let w:SavedBufView = {}
-    endif
-    let w:SavedBufView[bufnr("%")] = winsaveview()
-endfunction
-
-"restore window
-function! RestWinView()
-    let buf = bufnr("%")
-    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
-        call winrestview(w:SavedBufView[buf])
-        unlet w:SavedBufView[buf]
-    endif
-endfunction
-
-
-"headerfileguards
+"C headerfileguards
 function! s:insert_gates()
   let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
   execute "normal! Go#ifndef " . gatename
@@ -258,17 +149,12 @@ function! s:insert_gates()
 endfunction
 autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 
-
-"reindent
-"autocmd BufWritePre *.{c,cpp,h,hpp} :normal gg=G
-
 "flag whitespace
 function ShowWS()
    exe "normal mz"
    %s/\s\+$//ge
    exe "normal 'z"
 endfunction
-
 
 function DeleteTrailingWS()
    exe "normal mz"
@@ -278,31 +164,16 @@ endfunction
 
 autocmd BufWritePre *.py :call DeleteTrailingWS()
 
-"font and color
-highlight cursorline cterm=none
-"set guifont=Courier:h18:cDEFAULT
-set guifont=consolas=Consolas:h11:cDEFAULT
-
 syntax enable
 set background=dark
-" colorscheme	matrix
-colorscheme tetragrammaton
 set t_Co=256
-
-"fix ctrl-backspace
-inoremap <C-BS> <C-\><C-o>db
 
 "setup status bar and wildmenu
 set wildmenu
 set wildmode=list:longest,full
 set wildignore=*.o,*.sb
+
 set clipboard=unnamed
-"set statusline=%F\ %y\ %l/%L\:%c\ %P
-
-
-"extra C++ keywords
-syn keyword cppType local_persist internal_var internal_function global_var constant_var r32 r64 ubyte uint ulong i8 u8 i32 u32 i64 u64 i16 u16 b32
-"au BufNewFile,BufRead,BufEnter *.cpp,*.h set omnifunc=omni#cpp#complete#Main
 
 "size
 if has("gui_running")
@@ -310,30 +181,18 @@ if has("gui_running")
 endif
 
 
+"exit insert mode
+inoremap jk <esc>
+
 ""abreviations
 autocmd FileType cpp :iabbrev <buffer> iff if()<CR>{<CR>}<up><up><left>
-inoremap aee ä
-inoremap oee ö
-inoremap uee ü
-inoremap Aee Ä
-inoremap Oee Ö
-inoremap Uee Ü
+inoremap "aee ä
+inoremap "oee ö
+inoremap "uee ü
+inoremap "Aee Ä
+inoremap "Oee Ö
+inoremap "Uee Ü
 inoremap ssz ß
-"autocmd FileType tex :iabbrev <buffer> ae ä
-"autocmd FileType tex :iabbrev <buffer> oe ö
-"autocmd FileType tex :iabbrev <buffer> ue ü
-"autocmd FileType tex :iabbrev <buffer> Ae Ä
-"autocmd FileType tex :iabbrev <buffer> Oe Ö
-"autocmd FileType tex :iabbrev <buffer> Ue Ü
-
-"auto brackets
-autocmd FileType cpp inoremap { {}<Left>
-autocmd FileType cpp inoremap ( ()<Left>
-autocmd FileType cpp inoremap [ []<Left>
-
-autocmd FileType python inoremap { {}<Left>
-autocmd FileType python inoremap ( ()<Left>
-autocmd FileType python inoremap [ []<Left>
 
 ""mappings
 
@@ -348,33 +207,14 @@ nnoremap <C-h> <C-w>h
 
 "copy and paste from clipboard
 
-if has("win32")
-    vnoremap <C-c> "*y
-    nnoremap <C-p> "*p
-else
-    vnoremap <C-c> "+y
-    nnoremap <C-p> "+p
-endif
-
-
-""shift select
-"nnoremap <S-l> vl
-"nnoremap <S-k> vk
-"nnoremap <S-j> vj
-"nnoremap <S-h> vh
-"
-"vnoremap <S-l> l
-"vnoremap <S-k> k
-"vnoremap <S-j> j
-"vnoremap <S-h> h
+vnoremap <C-c> "*y
+nnoremap <C-p> "*p
 
 " build
 " TODO make building better (under windows)
 "nnoremap <c-F5> :vnew | !build.bat <CR>
 nnoremap <F5> :r!build<CR>
 nnoremap <F6> :vnew<CR>
-"nnoremap <c-F5> :vnew | r !dir #<CR>
-"set makeprg = "build"
 
 " Plugin settings
 " syntastic
@@ -390,20 +230,13 @@ let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
 let g:syntastic_cpp_include_dirs = ['../../include/', '../include', 'include']
 " TODO remove these again and add proper python indent
-let g:syntastic_python_flake8_args='--ignore=E501,E126'
 let g:syntastic_python_python_exec='/usr/bin/python3'
 " disable lacheck
 let g:syntastic_tex_checkers=['']
 
 " YCM
 let g:ycm_autoclose_preview_window_after_insertion = 1
-" TODO there has to be a portable way like: /usr/bin/env python
-"let g:ycm_server_python_interpreter = '/usr/bin/python2'
 let g:ycm_python_binary_path = 'python3'
 
 let g:indentLine_conceallevel = 2
 let g:indentLine_concealcursor = ''
-
-" TODO properly configure the go stuff
-" go imports settings
-" set gofmt_command = goimports
