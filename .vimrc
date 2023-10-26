@@ -199,11 +199,8 @@ inoremap ssz ß
 "save with ctrl+s
 nnoremap <C-s> :w<CR>
 
-"navigating views
-nnoremap <C-l> <C-w>l
-nnoremap <C-k> <C-w>k
-nnoremap <C-j> <C-w>j
-nnoremap <C-h> <C-w>h
+nmap <silent> <C-j> :ALENext<cr>
+nmap <silent> <C-k> :ALEPrevious<cr>
 
 "copy and paste from clipboard
 
