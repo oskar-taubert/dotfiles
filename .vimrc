@@ -15,6 +15,9 @@ Plugin 'scrooloose/nerdtree'
 
 "linter
 Plugin 'w0rp/ale'
+Plugin 'nvie/vim-flake8'
+"formatter
+Plugin 'psf/black'
 
 "multiple cursors
 Plugin 'terryma/vim-multiple-cursors'
@@ -44,8 +47,6 @@ Plugin 'tpope/vim-surround'
 "indent guides for space indentation
 Plugin 'Yggdroot/indentLine'
 
-"python things
-Plugin 'nvie/vim-flake8'
 
 " go things
 "Plugin 'fatih/vim-go'
@@ -163,6 +164,8 @@ function DeleteTrailingWS()
 endfunction
 
 autocmd BufWritePre *.py :call DeleteTrailingWS()
+
+autocmd BufWritePost *.py :execute ':Black'
 
 syntax enable
 set background=dark
